@@ -19,6 +19,13 @@ public static class Divisors {
     private static List<int> FindDivisors(int number) {
         List<int> results = new List<int>();
         // Todo problem 1
+        // loop through each number counting up to just one less than the number
+            for(int i = 1; i < number; i += 1){
+                // divide by each number - check if divides evenly - add to list if so
+                    if(number % i == 0){
+                        results.Add(i);
+                    }
+            }
         return results;
     }
 }

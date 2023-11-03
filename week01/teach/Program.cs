@@ -16,8 +16,8 @@ Console.WriteLine("\n======================\nArray Selector\n===================
 ArraySelector.Run();
 
 // Uncomment when you are ready to run this
-// Console.WriteLine("\n======================\nArray Selector\n======================");
-// Algorithms.Run();
+Console.WriteLine("\n======================\nPredict Measure Compare\n======================");
+Algorithms.Run();
 
 
 

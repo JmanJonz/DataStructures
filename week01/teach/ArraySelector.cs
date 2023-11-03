@@ -1,3 +1,5 @@
+using System.Globalization;
+
 public static class ArraySelector
 {
     public static void Run()
@@ -11,6 +13,24 @@ public static class ArraySelector
 
     private static int[] ListSelector(int[] list1, int[] list2, int[] select)
     {
-        return new int[0];
+        // make new array to append to
+            var newArray = new int[select.Length];
+        // loop through selector array 1 by one
+        // create inded to step through
+            var index1 = 0;
+            var index2 = 0;
+            var index3 = 0;
+            foreach(int num in select){
+                if(num == 1){
+                    newArray[index3] = list1[index1];
+                    index1 += 1;
+                }else{
+                    newArray[index3] = list2[index2];
+                    index2 += 1;
+                }
+                index3 += 1;
+            }
+        return newArray;
     }
+    
 }

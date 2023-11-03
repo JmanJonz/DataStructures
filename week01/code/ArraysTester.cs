@@ -39,7 +39,14 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        // create an array of ints to fit multiples of a given length
+            var createdArray = new double[length];
+        // for the length of the array add the number to the last number then add it to the array
+            for(int i = 0; i < length; i += 1){
+                createdArray[i] = number * (i+1);
+            }
+
+        return createdArray; // replace this return statement with your own
     }
     
     /// <summary>
@@ -57,5 +64,15 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
+        // get the index for the end of the list
+            var endIndex = data.Count -1;
+
+        // insert space at the beginnin of the list to hold the shifted item from the end
+            for(int i = 0; i < amount; i += 1){
+                // move the end items into the beginning of the list
+                    data.Insert(0, data[endIndex]);
+                // delete the old end items from the list
+                    data.RemoveAt(endIndex + 1);
+            }
     }
 }

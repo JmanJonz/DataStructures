@@ -51,6 +51,7 @@ public static class Algorithms {
             count += 1;
 
         return count;
+        // o(n)
     }
 
     /// <summary>
@@ -66,6 +67,7 @@ public static class Algorithms {
             count += 1;
 
         return count;
+        // o(2n) which is just o(n)
     }
 
     /// <summary>
@@ -85,5 +87,6 @@ public static class Algorithms {
         }
 
         return count;
+        // o(log(n))
     }
 }
