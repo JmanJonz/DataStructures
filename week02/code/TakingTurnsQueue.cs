@@ -34,8 +34,13 @@ public class TakingTurnsQueue {
             Console.WriteLine("No one in the queue.");
         else {
             Person person = _people.Dequeue();
+            // second fix right here
             if (person.Turns > 1) {
                 person.Turns -= 1;
+                _people.Enqueue(person);
+            }
+            // should work I think
+            if (person.Turns <= 0) {
                 _people.Enqueue(person);
             }
 

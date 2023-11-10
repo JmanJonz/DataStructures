@@ -23,8 +23,17 @@ public class CustomerService {
 
         // Test 1
         // Scenario: 
-        // Expected Result: 
+        // Expected Result: The user shall specify the maximum size of the Customer Service Queue when it is created. If the size is invalid (less than or equal to 0) then the size shall default to 10.
         Console.WriteLine("Test 1");
+        var customerService1 = new CustomerService(-1);
+            if(customerService1._maxSize != 10){
+                Console.WriteLine("Failed");
+            }
+        var customerService2 = new CustomerService(0);
+            if(customerService2._maxSize != 10){
+                Console.WriteLine("Failed");
+            }
+    
 
         // Defect(s) Found: 
 
@@ -32,18 +41,65 @@ public class CustomerService {
 
         // Test 2
         // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 2");
+        // Expected Result: The AddNewCustomer method shall enqueue a new customer into the queue.
+        // Console.WriteLine("Test 2");
+        //     var currentCount = customerService1._queue.Count;
+        //                         Console.WriteLine(currentCount);
+        //     customerService1.AddNewCustomer();
+        //     if(currentCount > customerService1._queue.Count){
+        //                                 Console.WriteLine(customerService1._queue.Count);
+        //         Console.WriteLine("Failed");
+        //     }
 
-        // Defect(s) Found: 
+        // Console.WriteLine("=================");
+
+        // Add more Test Cases As Needed Below
+        // If the queue is full when trying to add a customer, then an error message will be displayed.
+        // Console.WriteLine("Test 3");
+        //     var customerService3 = new CustomerService(3);
+        //         Console.WriteLine(customerService3._maxSize);
+        //         customerService3.AddNewCustomer();
+        //         customerService3.AddNewCustomer();
+        //         customerService3.AddNewCustomer();
+        //         if(customerService3._queue.Count > customerService3._maxSize){
+        //             Console.WriteLine("Test failed max size was passed and should not have been");
+        //         }
+
+
+        // Console.WriteLine("=================");
+
+
+        Console.WriteLine("Test 4");
+        // The ServeCustomer function shall dequeue the next customer from the queue and display the details.
+            var customerService4 = new CustomerService(3);
+            customerService4.AddNewCustomer();
+            var firstInQueue = customerService4._queue[0];
+            Console.WriteLine(firstInQueue);
+            customerService4.AddNewCustomer();
+
+            customerService4.ServeCustomer();
+
+            Console.WriteLine(customerService4._queue[0]);
+
+            if(firstInQueue == customerService4._queue[0]){
+                Console.WriteLine("Test Failed, first customer was not dequed");
+            }
+        Console.WriteLine("=================");
+
+
+        Console.WriteLine("Test 5");
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+
+
+
+
     }
 
     private readonly List<Customer> _queue = new();
     private readonly int _maxSize;
+
 
     public CustomerService(int maxSize) {
         if (maxSize <= 0)
@@ -78,7 +134,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }

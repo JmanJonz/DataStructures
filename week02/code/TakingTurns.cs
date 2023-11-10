@@ -22,10 +22,12 @@ public static class TakingTurns {
         players.AddPerson("Bob", 2);
         players.AddPerson("Tim", 5);
         players.AddPerson("Sue", 3);
+                                    // Console.WriteLine(players.ToString());
         // Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+        // Defect(s) Found: Seems as though it is popping off in a list in order more like a stack and people are not put to the back of the line
+        // fixed it.
 
         Console.WriteLine("---------");
 
@@ -48,7 +50,7 @@ public static class TakingTurns {
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: not sure if i happened to just fixed this when I fixed the first one but it looks good!
 
         Console.WriteLine("---------");
 
@@ -66,7 +68,7 @@ public static class TakingTurns {
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Failed test it appears as though tim isn't given unlimited turns even though he should be...
 
         Console.WriteLine("---------");
 
@@ -76,6 +78,6 @@ public static class TakingTurns {
         Console.WriteLine("Test 4");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
-        // Defect(s) Found:
+        // Defect(s) Found: none error is displayed saying that no one is in the queue as it should... 
     }
 }
