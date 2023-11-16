@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 
 public static class SetsAndMapsTester {
@@ -111,6 +112,29 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+
+        // make a set and load it with the unique words array
+        // we use a set instead of array becasue it has quicker lookup than an array
+        // if we were to lookup if an array contains key x then it would need to perform
+        // a linear search to check for it
+        // the set finds it in o(1) time. 
+            var wordsSet = new HashSet<string>(words);
+
+        // now using o(1) lookup time of a set instead of o(n) of an array or list
+        // check if the reversed string is inside the set and if it is also not the same thing
+        // if above proves true then they are inversely matched and not the same exact thing...
+        // also check that the pair hasn't already been displayed
+            // create a set that will track matches that have already been displayed
+                var matched = new HashSet<string>();
+            foreach(string value in wordsSet){
+                var inverse = value[1].ToString() + value[0].ToString();
+                if(inverse != value && wordsSet.Contains(inverse) && !matched.Contains(value)){
+                    // add value to matched in order to keep track of what pairs have already been displayed
+                        matched.Add(value);
+                        matched.Add(inverse);
+                    Console.WriteLine($"Inverse Match: {inverse} - {value}");
+                }
+            }
     }
 
     /// <summary>
@@ -132,6 +156,13 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            // if education is already listen in hash map add 1 to occurences
+            if(degrees.ContainsKey(fields[3])){
+                degrees[fields[3]] += 1;
+            // if education is not listed in the hash map add it with an occurance of 1
+            }else{
+                degrees[fields[3]] = 1;
+            }
         }
 
         return degrees;
@@ -158,7 +189,16 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+            // take each word and remove any leading or trailing white space
+                word1 = word1.Trim();
+                word2 = word2.Trim();
+            // now im going to take each letter of word 1 and add it as the keys to a dictionary
+            // key being each unique letter in the word and the value being how many occurances of the
+            // letter in the word
+                var dictionary = new Dictionary<char, int>();
+                    foreach(char letter in word1){
+                        if (dictionary.ContainsKey(letter))
+                    }
     }
 
     /// <summary>
