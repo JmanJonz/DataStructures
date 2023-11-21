@@ -190,15 +190,48 @@ public static class SetsAndMapsTester {
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
             // take each word and remove any leading or trailing white space
-                word1 = word1.Trim();
-                word2 = word2.Trim();
+            // also make all characters lowercase and move spaces
+                word2 = word2.Trim().ToLower().Replace(" ", "");
+                word1 = word1.Trim().ToLower().Replace(" ", "");
             // now im going to take each letter of word 1 and add it as the keys to a dictionary
             // key being each unique letter in the word and the value being how many occurances of the
             // letter in the word
-                var dictionary = new Dictionary<char, int>();
+                var dictionary1 = new Dictionary<char, int>();
                     foreach(char letter in word1){
-                        if (dictionary.ContainsKey(letter))
+                        if (dictionary1.ContainsKey(letter)){
+                            dictionary1[letter] += 1;
+                        }else{
+                            dictionary1[letter] = 1;
+                        }
                     }
+            // now im making a dictionary for word 2 to count how many of each letters are in the word
+                var dictionary2 = new Dictionary<char, int>();
+                    foreach(char letter in word2){
+                        if (dictionary2.ContainsKey(letter)){
+                            dictionary2[letter] += 1;
+                        }else{
+                            dictionary2[letter] = 1;
+                        }
+                    }
+
+            // if the dictionaries aren't the same length also return false
+                if(dictionary1.Count != dictionary2.Count){
+                    return false;
+                }
+
+            // now I am going to check if each letter from both words has the same # of occurances if at any point they don't
+            // It it will return back false that it is not an anagram otherwise it will return true.
+                foreach(KeyValuePair <char, int> entry in dictionary1){
+                    if(!dictionary2.ContainsKey(entry.Key)){
+                        return false;
+                    }
+                    if(entry.Value != dictionary2[entry.Key]){
+                        return false;
+                    }
+                }
+
+                return true;
+
     }
 
     /// <summary>
