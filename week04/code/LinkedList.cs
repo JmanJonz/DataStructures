@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
 
 public class LinkedList : IEnumerable<int> {
     private Node? _head;
@@ -27,7 +29,19 @@ public class LinkedList : IEnumerable<int> {
     /// Insert a new node at the back (i.e. the tail) of the linked list.
     /// </summary>
     public void InsertTail(int value) {
-        // TODO Problem 1
+        // Create new node
+        Node newNode = new Node(value);
+        // If the list is empty, then point both head and tail to the new node.
+        if (_tail is null) {
+            _head = newNode;
+            _tail = newNode;
+        }
+        // If the list is not empty, then only tail will be affected.
+        else {
+            newNode.Prev = _tail; // Connect new node to the previous tail
+            _tail.Next = newNode; // Connect the previous tail to the new node
+            _tail = newNode; // Update the tail to point to the new node
+        }
     }
 
 
@@ -55,7 +69,19 @@ public class LinkedList : IEnumerable<int> {
     /// Remove the last node (i.e. the tail) of the linked list.
     /// </summary>
     public void RemoveTail() {
-        // TODO Problem 2
+        // If the list has only one item in it, then set head and tail 
+        // to null resulting in an empty list.  This condition will also
+        // cover an empty list.  Its okay to set to null again.
+        if (_head == _tail) {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has more than one item in it, then only the tail
+        // will be affected.
+        else if (_tail is not null) {
+            _tail.Prev!.Next = null; // Disconnect the second to last node from the last node
+            _tail = _tail.Prev; // Update the tail to point to the second to last node
+        }
     }
 
     /// <summary>
@@ -93,14 +119,49 @@ public class LinkedList : IEnumerable<int> {
     /// Remove the first node that contains 'value'.
     /// </summary>
     public void Remove(int value) {
-        // TODO Problem 3
+        // while there is still stuff in the list...
+            var currt = _head;
+            while(currt != null){
+            // find the first node where values match to be removed...
+                if(currt.Data == value){
+                        // if head 
+                            if(currt == _head){
+                                RemoveHead();
+                            }
+                        // if tail
+                            if(currt == _tail){
+                                RemoveTail();
+                            }
+                        // set the previous node next to the current nodes next
+                            if(currt.Prev != null){
+                                currt.Prev.Next = currt.Next;
+                            }
+                        // set the next nodes previous to the current nodes previous
+                            if(currt.Next != null){
+                                currt.Next.Prev = currt.Prev;
+                            }
+                        // set the current nodes value to null which I guess deletes it? 
+                            currt = null;
+                            return;
+                }
+                currt = currt.Next;
+            }
     }
 
     /// <summary>
     /// Search for all instances of 'oldValue' and replace the value to 'newValue'.
     /// </summary>
     public void Replace(int oldValue, int newValue) {
-        // TODO Problem 4
+        // while there is still stuff in the list...
+            var currt = _head;
+            while(currt != null){
+            // find the first node where values match to be removed...
+                if(currt.Data == oldValue){
+                    currt.Data = newValue;
+                }
+                currt = currt.Next;
+            }
+
     }
 
     /// <summary>

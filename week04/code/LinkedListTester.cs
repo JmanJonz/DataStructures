@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 public static class LinkedListTester {
     public static void Run() {
         // Sample Test Cases (may not be comprehensive) 
