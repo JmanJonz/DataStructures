@@ -67,7 +67,7 @@ public static class RecursionTester {
         Console.WriteLine(CountWaysToClimb(20)); // 121415
         // Uncomment out the test below after implementing memoization.  It won't work without it.
         // TODO Problem 3
-        // Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
+        Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
 
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
@@ -146,8 +146,10 @@ public static class RecursionTester {
     /// n &lt;= 0, just return 0.   A loop should not be used.
     /// </summary>
     public static int SumSquaresRecursive(int n) {
-        // TODO Start Problem 1
-        return 0;
+        if(n == 1){
+            return 1;
+        }
+        return n * n + SumSquaresRecursive(n -1);
     }
 
     /// <summary>
@@ -170,7 +172,27 @@ public static class RecursionTester {
     /// and the length of the letters list).
     /// </summary>
     public static void PermutationsChoose(string letters, int size, string word = "") {
-        // TODO Start Problem 2
+        // base case so simple we know the clear answer that will be used to aswer other questions in
+        // this case we know our simple problem can't be subbed out any more when the length of our permutation
+        // is == to size then you can't go any further so write the permutation
+            if(word.Length == size){
+                Console.WriteLine(word);
+                return;
+            }
+        // the simpler subproblem that you do repeatedly until basecase is met
+        // looking at each letter in letters and foreach one im removing it from letters and 
+        // adding it to word
+        // i then repeat the process with the letters that haven't been used yet until the base case 
+        // is met which is word getting to length of size
+            for(int i = 0; i < letters.Length; i += 1){
+                // choose one of the options that hasn't already been added to word and I add it to word
+                // we know that letters only contains options that haven't been used yet becasue 
+                // it is called with only unused letters each time
+                    string newWord = word + letters[i];
+                // remove the letter that was used in word and permutate with it
+                    string newStr = letters.Substring(0, i) + letters.Substring(i + 1);
+                    PermutationsChoose(newStr, size, newWord);
+            }
     }
 
     /// <summary>
@@ -220,6 +242,13 @@ public static class RecursionTester {
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null) {
         // Base Cases
+        // if value was already calculated return it instead of calculating it again
+            if(remember == null){
+                remember = new Dictionary<int, decimal>();
+            }
+            if(remember.ContainsKey(s)){
+                return remember[s];
+            }
         if (s == 0)
             return 0;
         if (s == 1)
@@ -230,7 +259,9 @@ public static class RecursionTester {
             return 4;
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+        // memoize / cache already calculated values
+            remember[s] = ways;
         return ways;
     }
 
@@ -261,11 +292,42 @@ public static class RecursionTester {
         if (currPath == null)
             currPath = new List<ValueTuple<int, int>>();
 
-        // currPath.Add((1,2)); // Use this syntax to add to the current path
+        // add the step just made to path so we can track it
+            currPath.Add((x,y));
+        
+        // a case of the larger problem is solved... a full path is found write the path and return
+            if(maze.IsEnd(x,y)){
+                Console.WriteLine(currPath.AsString());
+                return;
+            }
 
-        // TODO Start Problem 5
-        // ADD CODE HERE
+        // smaller sub-problem based on where you are at in the maze check all four possible moves for 
+        // one that you haven't already been to & that isn't a wall if you find a valid option add it to current
+        // path then call the same function with updated coordinates as well as your previous path until your case case is met
+        // or you reach a dead end
+            // try each possible directional move from current location and if valid keep the process going
+            // up
+                if(maze.IsValidMove(currPath, x, y + 1)){
+                    // now call same function again with new cordinates and path to do the same thing
+                        SolveMaze(maze,x,y+1,currPath);
+                };
 
-        // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
+            // right
+                if(maze.IsValidMove(currPath, x + 1, y)){
+                    // now call same function again with new cordinates and path to do the same thing
+                        SolveMaze(maze,x+1,y,currPath);
+                };
+
+            // down
+                if(maze.IsValidMove(currPath, x, y - 1)){
+                    // now call same function again with new cordinates and path to do the same thing
+                        SolveMaze(maze,x,y-1,currPath);
+                };
+
+            // left
+                if(maze.IsValidMove(currPath, x - 1, y)){
+                    // now call same function again with new cordinates and path to do the same thing
+                        SolveMaze(maze,x-1,y,currPath);
+                };
     }
 }

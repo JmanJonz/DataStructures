@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 
 public class Program
@@ -10,47 +11,28 @@ public class Program
         // with any code or ideas you have that do not directly apply to
         // one of your projects.
 
-Console.WriteLine("\n======================\nSimple Stack\n======================");
+        Console.WriteLine("\n======================\nSimple Recursive Algorithm\n======================");
 
-var stack = new Stack<int>();
-stack.Push(1);
-stack.Push(2);
-stack.Push(3);
-stack.Pop();
-stack.Pop();
-stack.Push(4);
-stack.Push(5);
-stack.Pop();
-stack.Push(6);
-stack.Push(7);
-stack.Push(8);
-stack.Push(9);
-stack.Pop();
-stack.Pop();
-stack.Push(10);
-stack.Pop();
-stack.Pop();
-stack.Pop();
-stack.Push(11);
-stack.Push(12);
-stack.Pop();
-stack.Pop();
-stack.Pop();
-stack.Push(13);
-stack.Push(14);
-stack.Push(15);
-stack.Push(16);
-stack.Pop();
-stack.Pop();
-stack.Pop();
-stack.Push(17);
-stack.Push(18);
-stack.Pop();
-stack.Push(19);
-stack.Push(20);
-stack.Pop();
-stack.Pop();
+        // a recursive function to count down from number n
+            void countDown(int num){
+                Console.WriteLine(num);
+                                if(num == 1){
+                    return;
+                }
 
-Console.WriteLine("Final contents:");
-Console.WriteLine(String.Join(", ", stack.ToArray()));    }
+                num -= 1;
+                countDown(num);
+            }
+            countDown(8);
+
+        // a recursive function to sum all of the numbers from 1 to n}
+            int getNumCountSum(int n){
+                if(n == 1){
+                    return 1;
+                }
+                return n + getNumCountSum(n-1);
+            }
+
+            Console.WriteLine(getNumCountSum(5));
+    }
 }
