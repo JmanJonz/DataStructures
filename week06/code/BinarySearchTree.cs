@@ -14,6 +14,10 @@ public class BinarySearchTree : IEnumerable<int> {
             _root = newNode;
         // If the list is not empty, then only head will be affected.
         else
+        // it looks like every insert starts at the root node and it's the node's Insert method being
+        // called here not the binary search trees method... 
+        // this one is not a recursive call!!! now heading to the node class to see what is going on
+        // as it appears as though odly enough it will be handling most of the operation logic
             _root.Insert(value);
     }
 
