@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
+using System;
 
 public class Node {
     public int Data { get; set; }
@@ -43,12 +45,52 @@ public class Node {
         // if the current node in the recursive function call is ever = to the value then return true
         // if the current node in the recursive function call is not = to it and where it would go if it were
         // to be inserted then return false as it is nowhere in the tree
-
-        return false;
+        
+        if(value == Data){
+            return true;
+        }else if(value < Data){
+            if(Left is null){
+                return false;
+            }else{
+                return Left.Contains(value);
+            }
+        }else if(value > Data){
+            if(Right is null){
+                return false;
+            }else{
+                return Right.Contains(value);
+            }
+        }
+        
+        else{
+            return false;
+        }
     }
 
     public int GetHeight() {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        // base case we know we have made it as far as we can go when the left or right node is null - doesn't exist
+        // in this case just return 1 to account for the current node
+            if(Left is null & Right is null){
+                return 1;
+            }
+        // otherwise the repeated smaller subproblem is to get the height of the left and right sub trees and return what ever
+        // on is greater
+            var leftHeight = 0;
+            var rightHeight = 0;
+            if(Left is not null & Right is not null){
+                leftHeight = Left.GetHeight();
+                rightHeight = Right.GetHeight();
+            }else if(Left is not null & Right is null){
+                leftHeight = Left.GetHeight();
+                rightHeight = 0;
+            }else{
+                leftHeight = 0;
+                rightHeight = Right.GetHeight();
+            }
+            if(leftHeight > rightHeight){
+                return 1 + leftHeight;
+            }else{
+                return 1 + rightHeight;
+            }
     }
 }
